@@ -1,0 +1,18 @@
+B 3 C o m p i l a t i o n
+B 138 Symbol Listing
+B 215 Include File Summary
+B 229 Equation Listing    SOLVE bioenergy Using LP From line 96
+D 232 Energy
+D 323 Resource
+B 338 Column Listing      SOLVE bioenergy Using LP From line 96
+E 341 E
+E 348 X
+B 368 Model Statistics    SOLVE bioenergy Using LP From line 96
+B 384 Solution Report     SOLVE bioenergy Using LP From line 96
+F 411 Energy
+F 417 Resource
+G 472 E
+G 478 X
+B 589 E x e c u t i o n
+I 589 X
+I 609 X

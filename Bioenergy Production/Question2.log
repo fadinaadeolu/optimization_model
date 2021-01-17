@@ -1,0 +1,73 @@
+
+--- Job Question2.gms Start 08/27/19 06:23:23 27.1.0 r68fbe1a WEX-WEI x86 64bit/MS Windows
+--- GAMS Parameters defined
+    Input C:\Users\FADINA\Desktop\MICSS2\ES_Exam2\Question2.gms
+    PageWidth 80
+    PageSize 0
+    PageContr 3
+    Action CE
+    ScrDir C:\Users\FADINA\Desktop\MICSS2\ES_Exam2\225a\
+    SysDir C:\GAMS\win64\27.1\
+    WorkDir C:\Users\FADINA\Desktop\MICSS2\ES_Exam2\
+    LogOption 3
+    DFormat 0
+    TFormat 0
+    ErrorLog 99
+    IDE 1
+GAMS 27.1.0   Copyright (C) 1987-2019 GAMS Development. All rights reserved
+Licensee: GAMS Development Corporation, USA              G871201/0000CA-ANY
+          Free Demo, +1 202-342-0180, support@gams.com, www.gams.com DC0000
+--- Starting compilation
+--- Question2.gms(28) 3 Mb
+--- . data.gms(53) 3 Mb
+--- Question2.gms(57) 3 Mb
+--- Starting execution: elapsed 0:00:00.016
+--- Question2.gms(89) 4 Mb
+--- Generating LP model energy
+--- Question2.gms(109) 4 Mb
+---   21 rows  101 columns  221 non-zeroes
+--- Executing CPLEX: elapsed 0:00:00.099
+
+IBM ILOG CPLEX   27.1.0 r68fbe1a Released Apr 24, 2019 WEI x86 64bit/MS Window
+Cplex 12.9.0.0
+
+Reading data...
+Starting Cplex...
+Space for names approximately 0.00 Mb
+Use option 'names no' to turn use of names off
+CPXPARAM_Advance                                 0
+CPXPARAM_Simplex_Display                         2
+CPXPARAM_Threads                                 1
+CPXPARAM_Parallel                                1
+CPXPARAM_Simplex_Limits_Iterations               2000000000
+CPXPARAM_TimeLimit                               1000
+CPXPARAM_Tune_TimeLimit                          200
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 52 columns.
+Reduced LP has 20 rows, 49 columns, and 98 nonzeros.
+Presolve time = 0.00 sec. (0.05 ticks)
+
+Iteration      Dual Objective            In Variable           Out Variable
+     1               3.843925X(oilpalm.biodiesel.201Energy_demand_Equ slack
+     2               7.472651X(oilpalm.biodiesel.201Energy_demand_Equ slack
+     3              10.958013X(oilpalm.biodiesel.201Energy_demand_Equ slack
+     4              14.847055X(oilpalm.biodiesel.201Energy_demand_Equ slack
+     5              18.773476X(oilpalm.biodiesel.201Energy_demand_Equ slack
+     6              22.724536X(oilpalm.biodiesel.201Energy_demand_Equ slack
+     7              26.656432X(oilpalm.biodiesel.201Energy_demand_Equ slack
+     8              30.637163X(oilpalm.biodiesel.200Energy_demand_Equ slack
+     9              34.440647X(oilpalm.biodiesel.200Energy_demand_Equ slack
+    10              38.429142X(oilpalm.biodiesel.200Energy_demand_Equ slack
+LP status(1): optimal
+Cplex Time: 0.02sec (det. 0.08 ticks)
+
+Optimal solution found.
+Objective :          38.429142
+
+--- Restarting execution
+--- Question2.gms(109) 2 Mb
+--- Reading solution for model energy
+--- Executing after solve: elapsed 0:00:00.552
+--- Question2.gms(110) 3 Mb
+*** Status: Normal completion
+--- Job Question2.gms Stop 08/27/19 06:23:24 elapsed 0:00:00.567

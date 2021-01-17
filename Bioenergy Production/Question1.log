@@ -1,0 +1,60 @@
+
+--- Job Question1.gms Start 08/27/19 05:50:23 27.1.0 r68fbe1a WEX-WEI x86 64bit/MS Windows
+--- GAMS Parameters defined
+    Input C:\Users\FADINA\Desktop\MICSS2\ES_Exam2\Question1.gms
+    PageWidth 80
+    PageSize 0
+    PageContr 3
+    Action CE
+    ScrDir C:\Users\FADINA\Desktop\MICSS2\ES_Exam2\225a\
+    SysDir C:\GAMS\win64\27.1\
+    WorkDir C:\Users\FADINA\Desktop\MICSS2\ES_Exam2\
+    LogOption 3
+    DFormat 0
+    TFormat 0
+    ErrorLog 99
+    IDE 1
+GAMS 27.1.0   Copyright (C) 1987-2019 GAMS Development. All rights reserved
+Licensee: GAMS Development Corporation, USA              G871201/0000CA-ANY
+          Free Demo, +1 202-342-0180, support@gams.com, www.gams.com DC0000
+--- Starting compilation
+--- Question1.gms(31) 3 Mb
+--- . data.gms(47) 3 Mb
+--- Question1.gms(50) 3 Mb
+--- Starting execution: elapsed 0:00:00.030
+--- Question1.gms(82) 4 Mb
+--- Generating LP model bioenergy
+--- Question1.gms(96) 4 Mb
+---   51 rows  101 columns  161 non-zeroes
+--- Executing CPLEX: elapsed 0:00:00.127
+
+IBM ILOG CPLEX   27.1.0 r68fbe1a Released Apr 24, 2019 WEI x86 64bit/MS Window
+Cplex 12.9.0.0
+
+Reading data...
+Starting Cplex...
+Space for names approximately 0.00 Mb
+Use option 'names no' to turn use of names off
+CPXPARAM_Advance                                 0
+CPXPARAM_Threads                                 1
+CPXPARAM_Parallel                                1
+CPXPARAM_Simplex_Limits_Iterations               2000000000
+CPXPARAM_TimeLimit                               1000
+CPXPARAM_Tune_TimeLimit                          200
+Tried aggregator 1 time.
+LP Presolve eliminated 51 rows and 101 columns.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.04 ticks)
+LP status(1): optimal
+Cplex Time: 0.00sec (det. 0.06 ticks)
+
+Optimal solution found.
+Objective :     9131286.141947
+
+--- Restarting execution
+--- Question1.gms(96) 2 Mb
+--- Reading solution for model bioenergy
+--- Executing after solve: elapsed 0:00:00.550
+--- Question1.gms(97) 3 Mb
+*** Status: Normal completion
+--- Job Question1.gms Stop 08/27/19 05:50:24 elapsed 0:00:00.565

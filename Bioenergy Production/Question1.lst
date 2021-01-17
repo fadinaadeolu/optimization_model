@@ -1,0 +1,641 @@
+GAMS 27.1.0  r68fbe1a Released Apr 24, 2019 WEX-WEI x86 64bit/MS Windows 08/27/19 05:50:23 Page 1
+BIOENERGY IN BRAZIL
+C o m p i l a t i o n
+
+
+   3   
+      How much energy can be generated in each year (t) if all the feedstock cro
+      ps
+      (corn, sugarcane, palm oil, soybean, and rapeseed) produced by Brazil are 
+      used
+      to produce Ethanol and Biodiesel which is used for energy (KWh) generation
+      .
+   9   
+  10  Sets
+  11  allitem
+  12   /maize,sugarcane,oilpalm,soybean,rapeseed,
+  13    land,
+  14    co2,
+  15    biodiesel,ethanol,
+  16    industry,transport,residential,commercial,agriculture,
+  17    2007*2016/
+  18  j(allitem)  Crop
+  19   /maize,sugarcane,oilpalm,soybean,rapeseed/
+  20  i(allitem)  Resources
+  21   /land/
+  22  s(allitem)  Energy Demand
+  23   /industry,transport,residential,commercial,agriculture/
+  24  f(allitem)  Biofuel type
+  25   /biodiesel,ethanol/
+  26  t(allitem)  Period
+  27   /2007*2016/
+  28  c(allitem)  Emission
+  29   /co2/
+  30  ;
+INCLUDE    C:\Users\FADINA\Desktop\MICSS2\ES_Exam2\data.gms
+  32  table a(j,f,t)   Energy generated (GWh per millha)
+  33                       2007     2008       2009        2010        2011     
+         2012        2013        2014        2015        2016
+  34  maize    .biodiesel  1702.8   1702.8     1702.8      1702.8      1702.8   
+         1702.8      1702.8      1702.8      1702.8      1702.8
+  35  maize    .ethanol    20630.5  21455.72   22313.9488  23206.50675 24134.767
+      02 25100.1577  26104.16401 27148.33057 28234.26379 29363.63435
+  36  soybean  .biodiesel  4415.4   4592.016   4775.69664  4966.724506 5165.3934
+      86 5372.009225 5586.889594 5810.365178 6042.779785 6284.490977
+  37  soybean  .ethanol
+  38  sugarcane.biodiesel
+  39  sugarcane.ethanol    35590.5  37014.12   38494.6848  40034.47219 41635.851
+      08 43301.28512 45033.33653 46834.66999 48708.05679 50656.37906
+  40  rapeseed .biodiesel  9900     10296      10707.84    11136.1536  11581.599
+      74 12044.86373 12526.65828 13027.72461 13548.8336  14090.78694
+  41  rapeseed .ethanol
+  42  oilpalm  .biodiesel  49500    51480      53539.2     55680.768   57907.998
+      72 60224.31867 62633.29142 65138.62307 67744.168   70453.93471;
+  43   
+  44   
+  45  table m(i,j,t)    Maximum land cultivated for each period (millha)
+  46                   2007        2008         2009        2010         2011
+  47  land.maize       13.7674     14.444582    13.654715   12.678875    13.2188
+      92
+  48  land.soybean     20.565279   21.246302    21.750468   23.327296    23.9686
+      63
+  49  land.sugarcane   7.08092     8.140089     8.617555    9.076706     9.60131
+      6
+  50  land.rapeseed    0.032       0.033        0.031       0.046        0.042
+  51  land.oilpalm     0.102042    0.103158     0.103904    0.10642      0.10908
+  52   
+  53        +          2012        2013        2014        2015        2016
+  54  land.maize       14.198496   15.279652   15.432909   15.407143   14.958862
+  55  land.soybean     24.975258   27.906675   30.273763   32.181243   33.183119
+  56  land.sugarcane   9.705388    10.195166   10.419678   10.111376   10.222915
+  57  land.rapeseed    0.046       0.045       0.044       0.048       0.048
+  58  land.oilpalm     0.113135    0.108635    0.126559    0.140082    0.142246;
+  59   
+  60  table d(s,t)      energy demand (GWh)
+  61                   2007        2008        2009        2010        2011     
+         2012        2013        2014        2015        2016
+  62  industry         192616      197219      186279      203350      209390   
+         209621      210160      205932      196612      195347
+  63  transport        1575        1607        1591        1662        2548     
+         2782        2596        2794        2768        2584
+  64  residential      90881       95585       101779      108457      111971   
+         117646      124896      132049      131315      132916
+  65  commercial       92253       97048       101022      106697      112227   
+         119615      125729      133266      134084      132497
+  66  agriculture      17536       18397       16600       17696       21460    
+         23268       23786       26735       26871       27771;
+  67   
+  68  table hh(c,t) emission limit (tonnes). This is based on the assumption of 
+      9% annual decrease in emission from energy sector
+  69           2007        2008        2009        2010        2011        2012 
+               2013             2014        2015           2016
+  70  co2      216000000   205200000   194940000   185193000   175933350   16713
+      6682.5   158779848.4      150840856   143298813.2    136133872.5;
+  71   
+  72  table g(c,f,j,t) Emission in Mtoe C02 per millha. Emission per litre (f) *
+       litre per millha
+  73                              2007        2008         2009            2010 
+              2011               2012            2013           2014           2
+      015           2016
+  74  co2.ethanol  .maize         5.716524    5.94518496   6.182992358     6.430
+      312053  6.687524535        6.955025516     7.233226537    7.522555598    7
+      .823457822    8.136396135
+  75  co2.biodiesel.soybean       2.87028     2.9850912    3.104494848     3.228
+      674642  3.357821628        3.492134493     3.631819872    3.777092667    3
+      .928176374    4.085303429
+  76  co2.ethanol  .sugarcane     8.345424    8.67924096   9.026410598     9.387
+      467022  9.762965703        10.15348433     10.5596237     10.98200865    1
+      1.421289      11.87814056
+  77  co2.biodiesel.rapeseed      18.09       18.8136      19.566144       20.34
+      878976  21.16274135        22.009251       22.88962104    23.80520589    2
+      4.75741412    25.74771069
+  78  co2.biodiesel.oilpalm       1.075752    1.11878208   1.163533363     1.210
+      074698  1.258477686        1.308816793     1.361169465    1.415616243    1
+      .472240893    1.531130529 ;
+  79   
+  80  parameter b(i,j,t) land requirement for crop. Assumption that oilpalm is b
+      iennial;
+  81            b(i,j,t) = 1 ;
+  82            b(i,"oilpalm",t) = 0.5;
+  83   
+  84  FREE VARIABLE E 'energy generated (GWh)';
+  85  NONNEGATIVE VARIABLE X(j,f,t)
+  86   
+  87  Equations
+  88  Energy           'defined objective function'
+  89  Resource(i,j,t)  'land-use restriction for crop cultivation for each perio
+      d'
+  90  ;
+  91  Energy..  E  =E= SUM((j,f,t),a(j,f,t)*X(j,f,t));
+  92   
+  93  Resource(i,j,t).. b(i,j,t)*SUM(f,X(j,f,t))=L= m(i,j,t);
+  94   
+  95  Model bioenergy / all /
+  96  Solve bioenergy using LP maximizing E;
+  97  display X.l, X.m;
+GAMS 27.1.0  r68fbe1a Released Apr 24, 2019 WEX-WEI x86 64bit/MS Windows 08/27/19 05:50:23 Page 2
+BIOENERGY IN BRAZIL
+Symbol Listing
+
+
+SYMBOL      TYPE   REFERENCES
+
+a            PARAM declared       32  defined       32      ref       91
+allitem      SET   declared       11  defined       12      ref       18
+                         20       22       24       26       28
+b            PARAM declared       80 assigned       81       82
+                        ref       93
+bioenergy    MODEL declared       95  defined       95 impl-asn       96
+                        ref       96
+c            SET   declared       28  defined       29      ref       68
+                         72
+d            PARAM declared       60  defined       60
+E            VAR   declared       84 impl-asn       96      ref       91
+                         96
+Energy       EQU   declared       88  defined       91 impl-asn       96
+                        ref       95
+f            SET   declared       24  defined       25      ref       32
+                         72       85     2*91       93  control       91
+                         93
+g            PARAM declared       72  defined       72
+hh           PARAM declared       68  defined       68
+i            SET   declared       20  defined       21      ref       45
+                         80       89     2*93  control       81       82
+                         93
+j            SET   declared       18  defined       19      ref       32
+                         45       72       80       85       89     2*91
+                       3*93  control       81       91       93
+m            PARAM declared       45  defined       45      ref       93
+Resource     EQU   declared       89  defined       93 impl-asn       96
+                        ref       95
+s            SET   declared       22  defined       23      ref       60
+t            SET   declared       26  defined       27      ref       32
+                         45       60       68       72       80       85
+                         89     2*91     3*93  control       81       82
+                         91       93
+X            VAR   declared       85 impl-asn       96      ref       91
+                         93     2*97
+
+SETS      
+
+allitem       
+c             Emission
+f             Biofuel type
+i             Resources
+j             Crop
+s             Energy Demand
+t             Period
+
+PARAMETERS
+
+a             Energy generated (GWh per millha)
+b             land requirement for crop. Assumption that oilpalm is biennial
+d             energy demand (GWh)
+g             Emission in Mtoe C02 per millha. Emission per litre (f) * litre 
+              per millha
+hh            emission limit (tonnes). This is based on the assumption of 9% 
+              annual decrease in emission from energy sector
+m             Maximum land cultivated for each period (millha)
+
+VARIABLES 
+
+E             energy generated (GWh)
+X             
+
+EQUATIONS 
+
+Energy        defined objective function
+Resource      land-use restriction for crop cultivation for each period
+
+MODELS    
+
+bioenergy     
+GAMS 27.1.0  r68fbe1a Released Apr 24, 2019 WEX-WEI x86 64bit/MS Windows 08/27/19 05:50:23 Page 3
+BIOENERGY IN BRAZIL
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  C:\Users\FADINA\Desktop\MICSS2\ES_Exam
+                                          2\Question1.gms
+     2       31 INCLUDE        1      31  .C:\Users\FADINA\Desktop\MICSS2\ES_Exa
+                                           m2\data.gms
+
+
+COMPILATION TIME     =        0.015 SECONDS      3 MB  27.1.0 r68fbe1a WEX-WEI
+GAMS 27.1.0  r68fbe1a Released Apr 24, 2019 WEX-WEI x86 64bit/MS Windows 08/27/19 05:50:23 Page 4
+BIOENERGY IN BRAZIL
+Equation Listing    SOLVE bioenergy Using LP From line 96
+
+
+---- Energy  =E=  defined objective function
+
+Energy..  E - 1702.8*X(maize,biodiesel,2007) - 1702.8*X(maize,biodiesel,2008)
+     
+      - 1702.8*X(maize,biodiesel,2009) - 1702.8*X(maize,biodiesel,2010)
+     
+      - 1702.8*X(maize,biodiesel,2011) - 1702.8*X(maize,biodiesel,2012)
+     
+      - 1702.8*X(maize,biodiesel,2013) - 1702.8*X(maize,biodiesel,2014)
+     
+      - 1702.8*X(maize,biodiesel,2015) - 1702.8*X(maize,biodiesel,2016)
+     
+      - 20630.5*X(maize,ethanol,2007) - 21455.72*X(maize,ethanol,2008)
+     
+      - 22313.9488*X(maize,ethanol,2009) - 23206.50675*X(maize,ethanol,2010)
+     
+      - 24134.76702*X(maize,ethanol,2011) - 25100.1577*X(maize,ethanol,2012)
+     
+      - 26104.16401*X(maize,ethanol,2013) - 27148.33057*X(maize,ethanol,2014)
+     
+      - 28234.26379*X(maize,ethanol,2015) - 29363.63435*X(maize,ethanol,2016)
+     
+      - 35590.5*X(sugarcane,ethanol,2007) - 37014.12*X(sugarcane,ethanol,2008)
+     
+      - 38494.6848*X(sugarcane,ethanol,2009)
+     
+      - 40034.47219*X(sugarcane,ethanol,2010)
+     
+      - 41635.85108*X(sugarcane,ethanol,2011)
+     
+      - 43301.28512*X(sugarcane,ethanol,2012)
+     
+      - 45033.33653*X(sugarcane,ethanol,2013)
+     
+      - 46834.66999*X(sugarcane,ethanol,2014)
+     
+      - 48708.05679*X(sugarcane,ethanol,2015)
+     
+      - 50656.37906*X(sugarcane,ethanol,2016) - 49500*X(oilpalm,biodiesel,2007)
+     
+      - 51480*X(oilpalm,biodiesel,2008) - 53539.2*X(oilpalm,biodiesel,2009)
+     
+      - 55680.768*X(oilpalm,biodiesel,2010)
+     
+      - 57907.99872*X(oilpalm,biodiesel,2011)
+     
+      - 60224.31867*X(oilpalm,biodiesel,2012)
+     
+      - 62633.29142*X(oilpalm,biodiesel,2013)
+     
+      - 65138.62307*X(oilpalm,biodiesel,2014)
+     
+      - 67744.168*X(oilpalm,biodiesel,2015)
+     
+      - 70453.93471*X(oilpalm,biodiesel,2016) - 4415.4*X(soybean,biodiesel,2007)
+     
+      - 4592.016*X(soybean,biodiesel,2008)
+     
+      - 4775.69664*X(soybean,biodiesel,2009)
+     
+      - 4966.724506*X(soybean,biodiesel,2010)
+     
+      - 5165.393486*X(soybean,biodiesel,2011)
+     
+      - 5372.009225*X(soybean,biodiesel,2012)
+     
+      - 5586.889594*X(soybean,biodiesel,2013)
+     
+      - 5810.365178*X(soybean,biodiesel,2014)
+     
+      - 6042.779785*X(soybean,biodiesel,2015)
+     
+      - 6284.490977*X(soybean,biodiesel,2016) - 9900*X(rapeseed,biodiesel,2007)
+     
+      - 10296*X(rapeseed,biodiesel,2008) - 10707.84*X(rapeseed,biodiesel,2009)
+     
+      - 11136.1536*X(rapeseed,biodiesel,2010)
+     
+      - 11581.59974*X(rapeseed,biodiesel,2011)
+     
+      - 12044.86373*X(rapeseed,biodiesel,2012)
+     
+      - 12526.65828*X(rapeseed,biodiesel,2013)
+     
+      - 13027.72461*X(rapeseed,biodiesel,2014)
+     
+      - 13548.8336*X(rapeseed,biodiesel,2015)
+     
+      - 14090.78694*X(rapeseed,biodiesel,2016) =E= 0 ; (LHS = 0)
+     
+
+---- Resource  =L=  land-use restriction for crop cultivation for each period
+
+Resource(land,maize,2007)..  X(maize,biodiesel,2007) + X(maize,ethanol,2007)
+      =L= 13.7674 ; (LHS = 0)
+     
+Resource(land,maize,2008)..  X(maize,biodiesel,2008) + X(maize,ethanol,2008)
+      =L= 14.444582 ; (LHS = 0)
+     
+Resource(land,maize,2009)..  X(maize,biodiesel,2009) + X(maize,ethanol,2009)
+      =L= 13.654715 ; (LHS = 0)
+     
+REMAINING 47 ENTRIES SKIPPED
+
+GAMS 27.1.0  r68fbe1a Released Apr 24, 2019 WEX-WEI x86 64bit/MS Windows 08/27/19 05:50:23 Page 5
+BIOENERGY IN BRAZIL
+Column Listing      SOLVE bioenergy Using LP From line 96
+
+
+---- E  energy generated (GWh)
+
+E
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       Energy
+
+
+---- X  
+
+X(maize,biodiesel,2007)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+    -1702.8     Energy
+        1       Resource(land,maize,2007)
+
+X(maize,biodiesel,2008)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+    -1702.8     Energy
+        1       Resource(land,maize,2008)
+
+X(maize,biodiesel,2009)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+    -1702.8     Energy
+        1       Resource(land,maize,2009)
+
+REMAINING 97 ENTRIES SKIPPED
+GAMS 27.1.0  r68fbe1a Released Apr 24, 2019 WEX-WEI x86 64bit/MS Windows 08/27/19 05:50:23 Page 6
+BIOENERGY IN BRAZIL
+Model Statistics    SOLVE bioenergy Using LP From line 96
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS           51
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES          101
+NON ZERO ELEMENTS           161
+
+
+GENERATION TIME      =        0.094 SECONDS      4 MB  27.1.0 r68fbe1a WEX-WEI
+
+
+EXECUTION TIME       =        0.094 SECONDS      4 MB  27.1.0 r68fbe1a WEX-WEI
+GAMS 27.1.0  r68fbe1a Released Apr 24, 2019 WEX-WEI x86 64bit/MS Windows 08/27/19 05:50:23 Page 7
+BIOENERGY IN BRAZIL
+Solution Report     SOLVE bioenergy Using LP From line 96
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   bioenergy           OBJECTIVE  E
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  96
+
+**** SOLVER STATUS     1 Normal Completion         
+**** MODEL STATUS      1 Optimal                   
+**** OBJECTIVE VALUE          9131286.1419
+
+ RESOURCE USAGE, LIMIT          0.016      1000.000
+ ITERATION COUNT, LIMIT         0    2000000000
+
+IBM ILOG CPLEX   27.1.0 r68fbe1a Released Apr 24, 2019 WEI x86 64bit/MS Window
+Cplex 12.9.0.0
+
+Space for names approximately 0.00 Mb
+Use option 'names no' to turn use of names off
+LP status(1): optimal
+Cplex Time: 0.00sec (det. 0.06 ticks)
+Optimal solution found.
+Objective :     9131286.141947
+
+
+                       LOWER     LEVEL     UPPER    MARGINAL
+
+---- EQU Energy          .         .         .        1.000      
+
+  Energy  defined objective function
+
+---- EQU Resource  land-use restriction for crop cultivation for each period
+
+                       LOWER     LEVEL     UPPER    MARGINAL
+
+land.maize    .2007     -INF     13.767    13.767 20630.500      
+land.maize    .2008     -INF     14.445    14.445 21455.720      
+land.maize    .2009     -INF     13.655    13.655 22313.949      
+land.maize    .2010     -INF     12.679    12.679 23206.507      
+land.maize    .2011     -INF     13.219    13.219 24134.767      
+land.maize    .2012     -INF     14.198    14.198 25100.158      
+land.maize    .2013     -INF     15.280    15.280 26104.164      
+land.maize    .2014     -INF     15.433    15.433 27148.331      
+land.maize    .2015     -INF     15.407    15.407 28234.264      
+land.maize    .2016     -INF     14.959    14.959 29363.634      
+land.sugarcane.2007     -INF      7.081     7.081 35590.500      
+land.sugarcane.2008     -INF      8.140     8.140 37014.120      
+land.sugarcane.2009     -INF      8.618     8.618 38494.685      
+land.sugarcane.2010     -INF      9.077     9.077 40034.472      
+land.sugarcane.2011     -INF      9.601     9.601 41635.851      
+land.sugarcane.2012     -INF      9.705     9.705 43301.285      
+land.sugarcane.2013     -INF     10.195    10.195 45033.337      
+land.sugarcane.2014     -INF     10.420    10.420 46834.670      
+land.sugarcane.2015     -INF     10.111    10.111 48708.057      
+land.sugarcane.2016     -INF     10.223    10.223 50656.379      
+land.oilpalm  .2007     -INF      0.102     0.102 99000.000      
+land.oilpalm  .2008     -INF      0.103     0.103 1.0296E+5      
+land.oilpalm  .2009     -INF      0.104     0.104 1.0708E+5      
+land.oilpalm  .2010     -INF      0.106     0.106 1.1136E+5      
+land.oilpalm  .2011     -INF      0.109     0.109 1.1582E+5      
+land.oilpalm  .2012     -INF      0.113     0.113 1.2045E+5      
+land.oilpalm  .2013     -INF      0.109     0.109 1.2527E+5      
+land.oilpalm  .2014     -INF      0.127     0.127 1.3028E+5      
+land.oilpalm  .2015     -INF      0.140     0.140 1.3549E+5      
+land.oilpalm  .2016     -INF      0.142     0.142 1.4091E+5      
+land.soybean  .2007     -INF     20.565    20.565  4415.400      
+land.soybean  .2008     -INF     21.246    21.246  4592.016      
+land.soybean  .2009     -INF     21.750    21.750  4775.697      
+land.soybean  .2010     -INF     23.327    23.327  4966.725      
+land.soybean  .2011     -INF     23.969    23.969  5165.393      
+land.soybean  .2012     -INF     24.975    24.975  5372.009      
+land.soybean  .2013     -INF     27.907    27.907  5586.890      
+land.soybean  .2014     -INF     30.274    30.274  5810.365      
+land.soybean  .2015     -INF     32.181    32.181  6042.780      
+land.soybean  .2016     -INF     33.183    33.183  6284.491      
+land.rapeseed .2007     -INF      0.032     0.032  9900.000      
+land.rapeseed .2008     -INF      0.033     0.033 10296.000      
+land.rapeseed .2009     -INF      0.031     0.031 10707.840      
+land.rapeseed .2010     -INF      0.046     0.046 11136.154      
+land.rapeseed .2011     -INF      0.042     0.042 11581.600      
+land.rapeseed .2012     -INF      0.046     0.046 12044.864      
+land.rapeseed .2013     -INF      0.045     0.045 12526.658      
+land.rapeseed .2014     -INF      0.044     0.044 13027.725      
+land.rapeseed .2015     -INF      0.048     0.048 13548.834      
+land.rapeseed .2016     -INF      0.048     0.048 14090.787      
+
+                       LOWER     LEVEL     UPPER    MARGINAL
+
+---- VAR E              -INF  9.1313E+6     +INF       .         
+
+  E  energy generated (GWh)
+
+---- VAR X  
+
+                            LOWER     LEVEL     UPPER    MARGINAL
+
+maize    .biodiesel.2007      .         .        +INF  -1.893E+4      
+maize    .biodiesel.2008      .         .        +INF  -1.975E+4      
+maize    .biodiesel.2009      .         .        +INF  -2.061E+4      
+maize    .biodiesel.2010      .         .        +INF  -2.150E+4      
+maize    .biodiesel.2011      .         .        +INF  -2.243E+4      
+maize    .biodiesel.2012      .         .        +INF  -2.340E+4      
+maize    .biodiesel.2013      .         .        +INF  -2.440E+4      
+maize    .biodiesel.2014      .         .        +INF  -2.545E+4      
+maize    .biodiesel.2015      .         .        +INF  -2.653E+4      
+maize    .biodiesel.2016      .         .        +INF  -2.766E+4      
+maize    .ethanol  .2007      .       13.767     +INF       .         
+maize    .ethanol  .2008      .       14.445     +INF       .         
+maize    .ethanol  .2009      .       13.655     +INF       .         
+maize    .ethanol  .2010      .       12.679     +INF       .         
+maize    .ethanol  .2011      .       13.219     +INF       .         
+maize    .ethanol  .2012      .       14.198     +INF       .         
+maize    .ethanol  .2013      .       15.280     +INF       .         
+maize    .ethanol  .2014      .       15.433     +INF       .         
+maize    .ethanol  .2015      .       15.407     +INF       .         
+maize    .ethanol  .2016      .       14.959     +INF       .         
+sugarcane.biodiesel.2007      .         .        +INF  -3.559E+4      
+sugarcane.biodiesel.2008      .         .        +INF  -3.701E+4      
+sugarcane.biodiesel.2009      .         .        +INF  -3.849E+4      
+sugarcane.biodiesel.2010      .         .        +INF  -4.003E+4      
+sugarcane.biodiesel.2011      .         .        +INF  -4.164E+4      
+sugarcane.biodiesel.2012      .         .        +INF  -4.330E+4      
+sugarcane.biodiesel.2013      .         .        +INF  -4.503E+4      
+sugarcane.biodiesel.2014      .         .        +INF  -4.683E+4      
+sugarcane.biodiesel.2015      .         .        +INF  -4.871E+4      
+sugarcane.biodiesel.2016      .         .        +INF  -5.066E+4      
+sugarcane.ethanol  .2007      .        7.081     +INF       .         
+sugarcane.ethanol  .2008      .        8.140     +INF       .         
+sugarcane.ethanol  .2009      .        8.618     +INF       .         
+sugarcane.ethanol  .2010      .        9.077     +INF       .         
+sugarcane.ethanol  .2011      .        9.601     +INF       .         
+sugarcane.ethanol  .2012      .        9.705     +INF       .         
+sugarcane.ethanol  .2013      .       10.195     +INF       .         
+sugarcane.ethanol  .2014      .       10.420     +INF       .         
+sugarcane.ethanol  .2015      .       10.111     +INF       .         
+sugarcane.ethanol  .2016      .       10.223     +INF       .         
+oilpalm  .biodiesel.2007      .        0.204     +INF       .         
+oilpalm  .biodiesel.2008      .        0.206     +INF       .         
+oilpalm  .biodiesel.2009      .        0.208     +INF       .         
+oilpalm  .biodiesel.2010      .        0.213     +INF       .         
+oilpalm  .biodiesel.2011      .        0.218     +INF       .         
+oilpalm  .biodiesel.2012      .        0.226     +INF       .         
+oilpalm  .biodiesel.2013      .        0.217     +INF       .         
+oilpalm  .biodiesel.2014      .        0.253     +INF       .         
+oilpalm  .biodiesel.2015      .        0.280     +INF       .         
+oilpalm  .biodiesel.2016      .        0.284     +INF       .         
+oilpalm  .ethanol  .2007      .         .        +INF  -4.950E+4      
+oilpalm  .ethanol  .2008      .         .        +INF  -5.148E+4      
+oilpalm  .ethanol  .2009      .         .        +INF  -5.354E+4      
+oilpalm  .ethanol  .2010      .         .        +INF  -5.568E+4      
+oilpalm  .ethanol  .2011      .         .        +INF  -5.791E+4      
+oilpalm  .ethanol  .2012      .         .        +INF  -6.022E+4      
+oilpalm  .ethanol  .2013      .         .        +INF  -6.263E+4      
+oilpalm  .ethanol  .2014      .         .        +INF  -6.514E+4      
+oilpalm  .ethanol  .2015      .         .        +INF  -6.774E+4      
+oilpalm  .ethanol  .2016      .         .        +INF  -7.045E+4      
+soybean  .biodiesel.2007      .       20.565     +INF       .         
+soybean  .biodiesel.2008      .       21.246     +INF       .         
+soybean  .biodiesel.2009      .       21.750     +INF       .         
+soybean  .biodiesel.2010      .       23.327     +INF       .         
+soybean  .biodiesel.2011      .       23.969     +INF       .         
+soybean  .biodiesel.2012      .       24.975     +INF       .         
+soybean  .biodiesel.2013      .       27.907     +INF       .         
+soybean  .biodiesel.2014      .       30.274     +INF       .         
+soybean  .biodiesel.2015      .       32.181     +INF       .         
+soybean  .biodiesel.2016      .       33.183     +INF       .         
+soybean  .ethanol  .2007      .         .        +INF  -4415.400      
+soybean  .ethanol  .2008      .         .        +INF  -4592.016      
+soybean  .ethanol  .2009      .         .        +INF  -4775.697      
+soybean  .ethanol  .2010      .         .        +INF  -4966.725      
+soybean  .ethanol  .2011      .         .        +INF  -5165.393      
+soybean  .ethanol  .2012      .         .        +INF  -5372.009      
+soybean  .ethanol  .2013      .         .        +INF  -5586.890      
+soybean  .ethanol  .2014      .         .        +INF  -5810.365      
+soybean  .ethanol  .2015      .         .        +INF  -6042.780      
+soybean  .ethanol  .2016      .         .        +INF  -6284.491      
+rapeseed .biodiesel.2007      .        0.032     +INF       .         
+rapeseed .biodiesel.2008      .        0.033     +INF       .         
+rapeseed .biodiesel.2009      .        0.031     +INF       .         
+rapeseed .biodiesel.2010      .        0.046     +INF       .         
+rapeseed .biodiesel.2011      .        0.042     +INF       .         
+rapeseed .biodiesel.2012      .        0.046     +INF       .         
+rapeseed .biodiesel.2013      .        0.045     +INF       .         
+rapeseed .biodiesel.2014      .        0.044     +INF       .         
+rapeseed .biodiesel.2015      .        0.048     +INF       .         
+rapeseed .biodiesel.2016      .        0.048     +INF       .         
+rapeseed .ethanol  .2007      .         .        +INF  -9900.000      
+rapeseed .ethanol  .2008      .         .        +INF  -1.030E+4      
+rapeseed .ethanol  .2009      .         .        +INF  -1.071E+4      
+rapeseed .ethanol  .2010      .         .        +INF  -1.114E+4      
+rapeseed .ethanol  .2011      .         .        +INF  -1.158E+4      
+rapeseed .ethanol  .2012      .         .        +INF  -1.204E+4      
+rapeseed .ethanol  .2013      .         .        +INF  -1.253E+4      
+rapeseed .ethanol  .2014      .         .        +INF  -1.303E+4      
+rapeseed .ethanol  .2015      .         .        +INF  -1.355E+4      
+rapeseed .ethanol  .2016      .         .        +INF  -1.409E+4      
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 27.1.0  r68fbe1a Released Apr 24, 2019 WEX-WEI x86 64bit/MS Windows 08/27/19 05:50:23 Page 8
+BIOENERGY IN BRAZIL
+E x e c u t i o n
+
+
+----     97 VARIABLE X.L  
+
+                           2007        2008        2009        2010        2011
+
+maize    .ethanol        13.767      14.445      13.655      12.679      13.219
+sugarcane.ethanol         7.081       8.140       8.618       9.077       9.601
+oilpalm  .biodiesel       0.204       0.206       0.208       0.213       0.218
+soybean  .biodiesel      20.565      21.246      21.750      23.327      23.969
+rapeseed .biodiesel       0.032       0.033       0.031       0.046       0.042
+
+                  +        2012        2013        2014        2015        2016
+
+maize    .ethanol        14.198      15.280      15.433      15.407      14.959
+sugarcane.ethanol         9.705      10.195      10.420      10.111      10.223
+oilpalm  .biodiesel       0.226       0.217       0.253       0.280       0.284
+soybean  .biodiesel      24.975      27.907      30.274      32.181      33.183
+rapeseed .biodiesel       0.046       0.045       0.044       0.048       0.048
+
+
+----     97 VARIABLE X.M  
+
+                           2007        2008        2009        2010        2011
+
+maize    .biodiesel  -18927.700  -19752.920  -20611.149  -21503.707  -22431.967
+sugarcane.biodiesel  -35590.500  -37014.120  -38494.685  -40034.472  -41635.851
+oilpalm  .ethanol    -49500.000  -51480.000  -53539.200  -55680.768  -57907.999
+soybean  .ethanol     -4415.400   -4592.016   -4775.697   -4966.725   -5165.393
+rapeseed .ethanol     -9900.000  -10296.000  -10707.840  -11136.154  -11581.600
+
+                  +        2012        2013        2014        2015        2016
+
+maize    .biodiesel  -23397.358  -24401.364  -25445.531  -26531.464  -27660.834
+sugarcane.biodiesel  -43301.285  -45033.337  -46834.670  -48708.057  -50656.379
+oilpalm  .ethanol    -60224.319  -62633.291  -65138.623  -67744.168  -70453.935
+soybean  .ethanol     -5372.009   -5586.890   -5810.365   -6042.780   -6284.491
+rapeseed .ethanol    -12044.864  -12526.658  -13027.725  -13548.834  -14090.787
+
+
+
+EXECUTION TIME       =        0.000 SECONDS      3 MB  27.1.0 r68fbe1a WEX-WEI
+
+
+USER: GAMS Development Corporation, USA              G871201/0000CA-ANY
+      Free Demo, +1 202-342-0180, support@gams.com, www.gams.com DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\FADINA\Desktop\MICSS2\ES_Exam2\Question1.gms
+Output     C:\Users\FADINA\Desktop\MICSS2\ES_Exam2\Question1.lst

@@ -1,0 +1,19 @@
+B 3 C o m p i l a t i o n
+B 151 Include File Summary
+B 165 Equation Listing    SOLVE energy Using LP From line 109
+D 168 Objective_Equ
+D 269 Energy_demand_Equ
+D 304 Emission_Equ
+B 338 Column Listing      SOLVE energy Using LP From line 109
+E 341 L
+E 348 X
+B 371 Model Statistics    SOLVE energy Using LP From line 109
+B 387 Solution Report     SOLVE energy Using LP From line 109
+F 414 Objective_Equ
+F 418 Energy_demand_Equ
+F 433 Emission_Equ
+G 448 L
+G 452 X
+B 563 E x e c u t i o n
+I 563 X
+I 575 X
